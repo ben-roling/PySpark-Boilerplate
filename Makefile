@@ -10,7 +10,7 @@ help:
 
 all: default
 
-default: clean dev_deps deps test lint build
+default: clean dev_deps deps test clean lint build
 
 .venv:
 	if [ ! -e ".venv/bin/activate_this.py" ] ; then virtualenv --clear .venv ; fi
@@ -40,7 +40,7 @@ dev_deps: .venv
 lint:
 	. .venv/bin/activate && pylint -r n src/main.py src/shared src/jobs tests
 
-test:
+test: build
 	. .venv/bin/activate && nosetests ./tests/* --config=.noserc
 
 build: clean
